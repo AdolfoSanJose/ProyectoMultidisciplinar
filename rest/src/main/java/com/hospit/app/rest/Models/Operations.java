@@ -8,19 +8,19 @@ public class Operations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_operacion", unique = true, nullable = false)
-    private int idOperacion;
+    private int idOperation;
     private String descripcion;
 
     public Operations() {
 
     }
 
-    public int getIdOperacion() {
-        return idOperacion;
+    public int getIdOperation() {
+        return idOperation;
     }
 
-    public void setIdOperacion(int idOperacion) {
-        this.idOperacion = idOperacion;
+    public void setIdOperation(int idOperation) {
+        this.idOperation = idOperation;
     }
 
     public String getDescripcion() {

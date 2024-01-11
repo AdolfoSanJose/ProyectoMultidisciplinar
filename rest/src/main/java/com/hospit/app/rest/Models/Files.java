@@ -9,7 +9,9 @@ public class Files {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_archivo", unique = true, nullable = false)
     private int idFile;
+    @Column(name = "nombre_archivo")
     private String nombreArchivo;
+    @Column(name = "extension_archivo", length = 5)
     private char extensionArchivo;
     public Files() {
 
