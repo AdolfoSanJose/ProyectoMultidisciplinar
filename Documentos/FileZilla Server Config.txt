@@ -1,0 +1,216 @@
+<FileZillaServer>
+    <Settings>
+        <Item name="Admin port" type="numeric">14147</Item>
+    </Settings>
+    <Groups>
+        <Group Name="Administradores">
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir="C:\Hospital">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">0</Option>
+                    <Option Name="FileDelete">0</Option>
+                    <Option Name="FileAppend">0</Option>
+                    <Option Name="DirCreate">0</Option>
+                    <Option Name="DirDelete">0</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="1" DlLimit="10" ServerDlLimitBypass="0" UlType="1" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </Group>
+        <Group Name="Medicos">
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions />
+            <SpeedLimits DlType="1" DlLimit="10" ServerDlLimitBypass="0" UlType="1" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </Group>
+    </Groups>
+    <Users>
+        <User Name="SuperAdmin">
+            <Option Name="Pass">21232f297a57a5a743894a0e4a801fc3</Option>
+            <Option Name="Group">Administradores</Option>
+            <Option Name="Bypass server userlimit">2</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">2</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">2</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir="C:\Hospital">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">1</Option>
+                    <Option Name="FileDelete">1</Option>
+                    <Option Name="FileAppend">0</Option>
+                    <Option Name="DirCreate">1</Option>
+                    <Option Name="DirDelete">1</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">0</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="2" UlType="0" UlLimit="10" ServerUlLimitBypass="2">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+        <User Name="Adolfo">
+            <Option Name="Pass">66c5c3b260481aafe2e197ed8b9660f1</Option>
+            <Option Name="Group">Medicos</Option>
+            <Option Name="Bypass server userlimit">2</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">2</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">2</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir="C:\Hospital\Doctor Adolfo">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">1</Option>
+                    <Option Name="FileDelete">1</Option>
+                    <Option Name="FileAppend">1</Option>
+                    <Option Name="DirCreate">1</Option>
+                    <Option Name="DirDelete">1</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">0</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="2" UlType="0" UlLimit="10" ServerUlLimitBypass="2">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+        <User Name="Juanca">
+            <Option Name="Pass">2fd99d6c4d5ef8218b52d86385c7483d</Option>
+            <Option Name="Group"></Option>
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir="C:\Hospital\Doctor Juanca">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">1</Option>
+                    <Option Name="FileDelete">1</Option>
+                    <Option Name="FileAppend">1</Option>
+                    <Option Name="DirCreate">1</Option>
+                    <Option Name="DirDelete">1</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="0" UlType="0" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+        <User Name="Artem">
+            <Option Name="Pass">78a1a36cadacc5957857c3a714cd2f6a</Option>
+            <Option Name="Group"></Option>
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir="C:\Hospital\Doctor Artem">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">1</Option>
+                    <Option Name="FileDelete">1</Option>
+                    <Option Name="FileAppend">1</Option>
+                    <Option Name="DirCreate">1</Option>
+                    <Option Name="DirDelete">1</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="0" UlType="0" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+        <User Name="Gisela">
+            <Option Name="Pass">4eb6df1c8c304bc8dfe70d1791709147</Option>
+            <Option Name="Group"></Option>
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir="C:\Hospital\Doctora Gisela">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">1</Option>
+                    <Option Name="FileDelete">1</Option>
+                    <Option Name="FileAppend">1</Option>
+                    <Option Name="DirCreate">1</Option>
+                    <Option Name="DirDelete">1</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="0" UlType="0" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+    </Users>
+</FileZillaServer>
