@@ -9,17 +9,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario", unique = true, nullable = false)
     private Long idUser;
+
     @Column(name = "nombre")
     private String name;
+
     @Column(name = "correo", unique = true)
     private String email;
+
     @Column(name = "contrasegna")
     private String password;
+
     @Column
     private String dni;
+
     @ManyToOne
     @JoinColumn(name = "id_rol")
     private Roles idRol;
+
+    @ManyToOne
+    @JoinColumn(name = "id_medico")
+    private User medico;
 
     public User() {
     }
@@ -70,5 +79,13 @@ public class User {
 
     public void setIdRol(Roles idRol) {
         this.idRol = idRol;
+    }
+
+    public User getMedico() {
+        return medico;
+    }
+
+    public void setMedico(User medico) {
+        this.medico = medico;
     }
 }
