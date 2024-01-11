@@ -19,19 +19,6 @@ class _FileSharingPageState extends State<FileSharingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Hospitapp",
-          style: TextStyle(fontSize: 35),
-        ),
-        leading: const Icon(
-          Icons.local_hospital_rounded,
-          size: 40,
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blue.shade400,
-        actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.logout))],
-      ),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -46,14 +33,6 @@ class _FileSharingPageState extends State<FileSharingPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  '{nombreUsuario}', // Aquí podría ir dinámicamente el nombre del usuario
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                ),
-
                 const SizedBox(height: 50),
 
                 Column(
@@ -62,7 +41,12 @@ class _FileSharingPageState extends State<FileSharingPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                            onPressed: () => {}, child: Text('Subir archivo'))
+                            style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(
+                              fontSize: 20,
+                            )),
+                            onPressed: () => {},
+                            child: const Text('Subir archivo'))
                       ],
                     ),
                   ],
@@ -73,8 +57,9 @@ class _FileSharingPageState extends State<FileSharingPage> {
                   height: 500,
                   width: 350,
                   decoration: BoxDecoration(
-                      color: const Color.fromARGB(37, 0, 134, 243),
-                      borderRadius: BorderRadius.circular(20)),
+                    color: const Color.fromARGB(37, 0, 134, 243),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Column(children: []),
                 ),
               ],
