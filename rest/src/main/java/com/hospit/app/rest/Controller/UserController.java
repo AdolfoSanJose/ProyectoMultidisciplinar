@@ -36,5 +36,9 @@ public class UserController {
             return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.UNAUTHORIZED);
         }
     }
+    @PostMapping("/registerMergeTest")
+    public User registerUser(@RequestBody User user){
+        return this.userService.registerUser(user);
+    }
 
 }
