@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'package:flutter_application_1/controllers/roles.dart';
+import 'package:flutter_application_1/pages/main_screen.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/controllers/user.dart';
 import '../components/my_textfield.dart';
 import '../components/my_button.dart';
 
@@ -15,8 +21,43 @@ class _LoginPageState extends State<LoginPage> {
   final mailController = TextEditingController();
   final passwdController = TextEditingController();
 
+  // Form key
+  final formKey = GlobalKey<FormState>();
+  User user = User(name: "");
+  Uri url = Uri.parse("http://10.0.2.2:8080/user/login");
+
   // Sign in method
-  void signIn() {}
+  Future signIn() async {
+    try {
+      user.email = mailController.text;
+      user.password = passwdController.text;
+      var res = await http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'email': user.email, 'password': user.password}));
+      print(res.body);
+      print(user.email);
+      if (res.statusCode == 200) {
+        return Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => MainScreen(user.email)));
+      } else {
+        openDialog("Credenciales incorrectas");
+      }
+    } catch (error) {
+      print("Error in signIn: $error");
+    }
+  }
+
+  // Error Dialog
+  Future openDialog(String message) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(message),
+            titleTextStyle: const TextStyle(
+              color: Colors.red,
+              fontSize: 20,
+            ),
+            actions: const [CloseButton()],
+          ));
 
   @override
   Widget build(BuildContext context) {
@@ -45,98 +86,107 @@ class _LoginPageState extends State<LoginPage> {
           ),
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 15),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 15),
 
-                  // Log in icon
-                  Icon(
-                    Icons.login,
-                    size: 80,
-                    color: Colors.blue.shade700,
-                  ),
-
-                  const SizedBox(height: 50),
-
-                  // Welcome back text
-                  const Text(
-                    '¡Bienvenido de vuelta!',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                    // Log in icon
+                    Icon(
+                      Icons.login,
+                      size: 80,
+                      color: Colors.blue.shade700,
                     ),
-                  ),
 
-                  const SizedBox(height: 15),
+                    const SizedBox(height: 50),
 
-                  // Log in container
-                  Container(
-                    height: 500,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(37, 0, 134, 243),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Column(children: [
-                      const SizedBox(height: 40),
-
-                      // Correo
-                      MyTextField(
-                        controller: mailController,
-                        hintText: 'Correo',
-                        obscureText: false,
+                    // Welcome back text
+                    const Text(
+                      '¡Bienvenido de vuelta!',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
                       ),
+                    ),
 
-                      const SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
-                      // Password
-                      MyTextField(
-                        controller: passwdController,
-                        hintText: 'Contraseña',
-                        obscureText: true,
-                      ),
+                    // Log in container
+                    Container(
+                      height: 500,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(37, 0, 134, 243),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(children: [
+                        const SizedBox(height: 40),
 
-                      const SizedBox(height: 25),
-
-                      // Sign in button
-                      MyButton(
-                        onTap: signIn,
-                        text: 'Iniciar Sesión',
-                      ),
-
-                      const SizedBox(height: 50),
-
-                      // Register
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Divider(
-                          thickness: 1,
-                          color: Colors.blueGrey,
+                        // Correo
+                        MyTextField(
+                          controller: mailController,
+                          hintText: 'Correo',
+                          obscureText: false,
+                          errorText: 'Campo correo no puede estar vacío',
                         ),
-                      ),
 
-                      const SizedBox(height: 50),
+                        const SizedBox(height: 15),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('¿No eres miembro?'),
-                          const SizedBox(width: 5),
-                          GestureDetector(
-                            onTap: widget.onTap,
-                            child: const Text(
-                              'Registrate ahora',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
+                        // Password
+                        MyTextField(
+                          controller: passwdController,
+                          hintText: 'Contraseña',
+                          obscureText: true,
+                          errorText: 'Campo contraseña no puede estar vacío',
+                        ),
+
+                        const SizedBox(height: 25),
+
+                        // Sign in button
+                        MyButton(
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              signIn();
+                            }
+                          },
+                          text: 'Iniciar Sesión',
+                        ),
+
+                        const SizedBox(height: 50),
+
+                        // Register
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+
+                        const SizedBox(height: 50),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('¿No eres miembro?'),
+                            const SizedBox(width: 5),
+                            GestureDetector(
+                              onTap: widget.onTap,
+                              child: const Text(
+                                'Registrate ahora',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ]),
-                  ),
-                ],
+                          ],
+                        )
+                      ]),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

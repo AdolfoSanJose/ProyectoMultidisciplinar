@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/spash_screen.dart';
+import 'pages/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
