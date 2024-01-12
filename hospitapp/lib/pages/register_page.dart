@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/roles.dart';
 import 'package:flutter_application_1/controllers/user.dart';
@@ -45,8 +46,6 @@ class _RegisterPageState extends State<RegisterPage> {
           password: null,
           dni: null,
           idRol: Roles(idRol: null)));
-  Uri urlRegister = Uri.parse("http://10.0.2.2:8080/user/register");
-  Uri urlUserData = Uri.parse("http://10.0.2.2:8080/user/getUserDataByRole");
 
   @override
   void initState() {
@@ -55,8 +54,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> getUserDataByRole(Roles idRol) async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/getUserDataByRole");
     try {
-      var res = await http.post(urlUserData,
+      var res = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(
             {'idRol': idRol.idRol},
@@ -79,10 +80,15 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  String getBaseUrl() {
+    return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
+  }
   // String dropdownValue = list.first;
 
   // Sign up method
   Future signUp() async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/register");
     try {
       user.name = nameController.text;
       user.dni = dniController.text;
@@ -91,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (user.password != confirmPasswdController.text) {
         openDialog("Las contraseñas no coinciden.", Colors.red);
       } else {
-        var res = await http.post(urlRegister,
+        var res = await http.post(url,
             headers: {'Content-Type': 'application/json'},
             body: json.encode({
               'name': user.name,

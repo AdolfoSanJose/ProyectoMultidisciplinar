@@ -1,12 +1,13 @@
 import 'dart:convert';
-import 'package:flutter_application_1/controllers/roles.dart';
-import 'package:flutter_application_1/pages/home_page.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_application_1/controllers/user.dart';
+import 'package:flutter_application_1/pages/main_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/controllers/roles.dart';
+import 'package:flutter/material.dart';
 import '../components/my_textfield.dart';
 import '../components/my_button.dart';
+import '../controllers/roles.dart';
 
 class LoginPage extends StatefulWidget {
   void Function()? onTap;
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // Form key
   final formKey = GlobalKey<FormState>();
+
   User user = User(
       idUser: 0,
       name: '',
@@ -30,10 +32,11 @@ class _LoginPageState extends State<LoginPage> {
       password: '',
       dni: '',
       idRol: Roles(idRol: 0));
-  Uri url = Uri.parse("http://10.0.2.2:8080/user/login");
 
   // Sign in method
   Future signIn() async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/login");
     try {
       user.email = mailController.text;
       user.password = passwdController.text;
@@ -43,8 +46,8 @@ class _LoginPageState extends State<LoginPage> {
       print(res.body);
       print(user.email);
       if (res.statusCode == 200) {
-        return Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const HomePage()));
+        return Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
       } else {
         openDialog("Credenciales incorrectas");
       }
@@ -53,6 +56,9 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  String getBaseUrl() {
+    return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
+  }
   // Error Dialog
   Future openDialog(String message) => showDialog(
       context: context,
@@ -116,7 +122,6 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 15,
                       ),
                     ),
-
                     const SizedBox(height: 15),
 
                     // Log in container

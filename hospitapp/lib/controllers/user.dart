@@ -10,12 +10,12 @@ class User {
   late User? medico;
 
   User({
-    required this.idUser,
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.dni,
-    required this.idRol,
+    this.idUser,
+    this.name,
+    this.email,
+    this.password,
+    this.dni,
+    this.idRol,
     this.medico,
   });
 

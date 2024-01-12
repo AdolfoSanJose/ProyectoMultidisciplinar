@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
     // Al meter en esta lista las vistas, aparecerán en ese mismo orden en el menú de navegación
     final screens = [
       FileSharingPage(),
-      MessagesView(),
+      const MessagesView(),
       UserDataView(),
     ];
     return Scaffold(
@@ -89,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.message_outlined),
             activeIcon: const Icon(Icons.message_rounded),
-            label: 'Mensajes',
+            label: 'Contacto',
             backgroundColor: Colors.blue.shade700,
           ),
           BottomNavigationBarItem(
