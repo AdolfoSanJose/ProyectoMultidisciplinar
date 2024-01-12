@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_application_1/controllers/roles.dart';
-import 'package:flutter_application_1/pages/home_page.dart';
+import 'package:flutter_application_1/pages/main_screen.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -23,13 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // Form key
   final formKey = GlobalKey<FormState>();
-  User user = User(
-      idUser: 0,
-      name: '',
-      email: '',
-      password: '',
-      dni: '',
-      idRol: Roles(idRol: 0));
+  User user = User(name: "");
   Uri url = Uri.parse("http://10.0.2.2:8080/user/login");
 
   // Sign in method
@@ -44,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       print(user.email);
       if (res.statusCode == 200) {
         return Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const HomePage()));
+            MaterialPageRoute(builder: (_) => MainScreen(user.email)));
       } else {
         openDialog("Credenciales incorrectas");
       }

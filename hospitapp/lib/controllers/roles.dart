@@ -1,11 +1,11 @@
 class Roles {
-  late int? idRol;
+  int? idRol;
 
-  Roles({required this.idRol});
+  Roles({this.idRol});
 
-  factory Roles.fromJson(Map<String?, dynamic> json) {
+  factory Roles.fromJson(Map<String, dynamic> json) {
     return Roles(
-      idRol: json?['id_rol'],
+      idRol: json['id_rol'],
     );
   }
 }

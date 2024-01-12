@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/login_page.dart';
-import 'package:flutter_application_1/pages/register_page.dart';
+import 'package:flutter_application_1/pages/login_or_register_page.dart';
 import 'package:flutter_application_1/pages/sessionViews/messages_view.dart';
 import 'package:flutter_application_1/pages/sessionViews/user_data_view.dart';
 import 'sessionViews/file_sharing_page.dart';
 
 // Menú base para la barra de navegación al iniciar sesión en la aplicación
 class MainScreen extends StatefulWidget {
+  const MainScreen(String? email, {super.key});
+
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -54,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginPage(onTap: () {}),
+                              builder: (context) => const LoginOrRegisterPage(),
                             ),
                           );
                         },
@@ -63,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               );
             },
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
@@ -100,9 +101,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
           // <----AÑADE AQUÍ TANTOS BottomNavigationBarItem como vistas añadidas a la lista 'screens'
           // BottomNavigationBarItem(
-          //   icon: const Icon(Icons.person_outline),
-          //   activeIcon: const Icon(Icons.person_rounded),
-          //   label: 'SampleView',
+          //   icon: const Icon(Icons.file_open_outlined),
+          //   activeIcon: const Icon(Icons.file_open_rounded),
+          //   label: 'Logs',
           //   backgroundColor: Colors.blue.shade700,
           // ),
         ],

@@ -27,60 +27,61 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswdController = TextEditingController();
 
   // User List
-  List<User> userList = [];
+  List<dynamic> userList = [];
   String selectedUserId = '';
 
   final formKey = GlobalKey<FormState>();
-  User user = User(
-      idUser: null,
-      name: null,
-      email: null,
-      password: null,
-      dni: null,
-      idRol: Roles(idRol: null),
-      medico: User(
-          idUser: null,
-          name: null,
-          email: null,
-          password: null,
-          dni: null,
-          idRol: Roles(idRol: null)));
+  User user = User(name: "");
   Uri urlRegister = Uri.parse("http://10.0.2.2:8080/user/register");
-  Uri urlUserData = Uri.parse("http://10.0.2.2:8080/user/getUserDataByRole");
+  Uri urlUserDataByRole =
+      Uri.parse("http://10.0.2.2:8080/user/getUserDataByRole");
 
-  @override
-  void initState() {
-    super.initState();
-    getUserDataByRole(Roles(idRol: 1));
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getUserDataByRole(Roles(idRol: 1));
+  // }
 
-  Future<void> getUserDataByRole(Roles idRol) async {
-    try {
-      var res = await http.post(urlUserData,
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode(
-            {'idRol': idRol.idRol},
-          ));
-      if (res.statusCode == 200) {
-        print(res.body);
-        final List<dynamic> data = json.decode(res.body);
-        if (data != null && data is List) {
-          List<User> users = data.map((json) => User.fromJson(json)).toList();
-          setState(() {
-            userList = users;
-          });
-        }
-      } else {
-        print('Error al obtener usuarios. Código de estado: ${res.statusCode}');
-        print('Cuerpo de la respuesta: ${res.body}');
-      }
-    } catch (error) {
-      print('Error en getUsers: $error');
-    }
-  }
+  // Future<void> getUserDataByRole(Roles idRol) async {
+  //   try {
+  //     var res = await http.post(
+  //       urlUserDataByRole,
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: json.encode(
+  //         {'idRol': idRol.idRol},
+  //       ),
+  //     );
+
+  //     print(idRol.idRol);
+
+  //     if (res.statusCode == 200) {
+  //       print(res.body);
+  //       final List<dynamic>? jsonData = json.decode(res.body);
+  //       print(jsonData?[0]);
+
+  //       if (jsonData != null) {
+  //         List<User> users =
+  //             jsonData.map<User>((json) => User.fromJson(json)).toList();
+  //         print(users[1].name);
+  //         setState(() {
+  //           userList = users;
+  //           print(userList[1]);
+  //         });
+  //       } else {
+  //         print('Error: La respuesta no es una lista válida.');
+  //       }
+  //     } else {
+  //       print('Error al obtener usuarios. Código de estado: ${res.statusCode}');
+  //       print('Cuerpo de la respuesta: ${res.body}');
+  //     }
+  //   } catch (error) {
+  //     print('Error en getUsers: $error');
+  //   }
+  // }
 
   // String dropdownValue = list.first;
 
+//https://www.youtube.com/watch?v=u4qmtlrXQNg
   // Sign up method
   Future signUp() async {
     try {
@@ -98,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'email': user.email,
               'password': user.password,
               'dni': user.dni,
-              'id_rol': 2
+              'id_rol': user.dni,
             }));
         print(res.body);
         if (res.statusCode == 200) {
@@ -208,37 +209,36 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 15),
 
                       // Dropdown
-                      Row(
-                        children: [
-                          DropdownButton<String>(
-                            hint: const Text("Selecciona a tu médico"),
-                            value: selectedUserId,
-                            icon: const Icon(Icons.arrow_downward_outlined),
-                            iconSize: 25,
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.black),
-                            padding: const EdgeInsets.only(left: 30),
-                            iconEnabledColor: Colors.blueAccent,
-                            underline: Container(
-                              height: 2,
-                              color: Colors.blue,
-                            ),
-                            onChanged: (String? newValue) {
-                              // This is called when the user selects an item.
-                              setState(() {
-                                selectedUserId = newValue!;
-                              });
-                            },
-                            items: userList
-                                .map<DropdownMenuItem<String>>((User user) {
-                              return DropdownMenuItem<String>(
-                                value: user.medico?.idUser.toString(),
-                                child: Text(user.toString()),
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     DropdownButton<String>(
+                      //       hint: const Text("Selecciona a tu médico"),
+                      //       value: selectedUserId,
+                      //       icon: const Icon(Icons.arrow_downward_outlined),
+                      //       iconSize: 25,
+                      //       elevation: 16,
+                      //       style: const TextStyle(color: Colors.black),
+                      //       padding: const EdgeInsets.only(left: 30),
+                      //       iconEnabledColor: Colors.blueAccent,
+                      //       underline: Container(
+                      //         height: 2,
+                      //         color: Colors.blue,
+                      //       ),
+                      //       onChanged: (String? newValue) {
+                      //         setState(() {
+                      //           selectedUserId = newValue!;
+                      //         });
+                      //       },
+                      //       items: (userList as List<User>)
+                      //           .map<DropdownMenuItem<String>>((User user) {
+                      //         return DropdownMenuItem<String>(
+                      //           value: user.idUser.toString(),
+                      //           child: Text(""),
+                      //         );
+                      //       }).toList(),
+                      //     ),
+                      //   ],
+                      // ),
 
                       const SizedBox(height: 15),
 

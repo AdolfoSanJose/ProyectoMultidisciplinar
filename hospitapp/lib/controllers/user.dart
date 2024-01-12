@@ -1,33 +1,38 @@
 import 'package:flutter_application_1/controllers/roles.dart';
 
 class User {
-  late int? idUser;
-  late String? name;
-  late String? email;
-  late String? password;
-  late String? dni;
-  late Roles? idRol;
-  late User? medico;
+  int? idUser;
+  String? name;
+  String? email;
+  String? password;
+  String? dni;
+  Roles? idRol;
+  User? medico;
 
   User({
-    required this.idUser,
+    this.idUser,
     required this.name,
-    required this.email,
-    required this.password,
-    required this.dni,
-    required this.idRol,
+    this.email,
+    this.password,
+    this.dni,
+    this.idRol,
     this.medico,
   });
 
-  factory User.fromJson(Map<String?, dynamic>? json) {
+  @override
+  String toString() {
+    return 'User{id: $idUser, name: $name}';
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      idUser: json?['id_usuario'],
-      name: json?['nombre'],
-      email: json?['correo'],
-      password: json?['contrasegna'],
-      dni: json?['dni'],
-      idRol: Roles?.fromJson(json?['id_rol']),
-      medico: json?['medico'] != null ? User.fromJson(json?['medico']) : null,
+      idUser: json['id_usuario'],
+      name: json['nombre'],
+      email: json['correo'],
+      password: json['contrasegna'],
+      dni: json['dni'],
+      idRol: json['id_rol'],
+      medico: json['medico'],
     );
   }
 }
