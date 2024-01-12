@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ftpconnect/ftpconnect.dart';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 
 class FileSharingPage extends StatefulWidget {
   void Function()? onTap;
@@ -45,7 +48,33 @@ class _FileSharingPageState extends State<FileSharingPage> {
                                 textStyle: const TextStyle(
                               fontSize: 20,
                             )),
-                            onPressed: () => {},
+                            onPressed: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles();
+                              if (result != null) {
+                                if (result.files.single.bytes != null) {
+                                  List<int> fileBytes =
+                                      result.files.single.bytes!;
+                                  File file =
+                                      await File(result.files.single.name)
+                                          .writeAsBytes(fileBytes);
+                                  FTPConnect ftpConnect = FTPConnect(
+                                      '192.168.56.1',
+                                      user: 'Gisela',
+                                      pass: 'medicoGisela',
+                                      port: 21);
+
+                                  await ftpConnect.connect();
+                                  bool res =
+                                      await ftpConnect.uploadFileWithRetry(file,
+                                          pRetryCount: 2);
+                                  await ftpConnect.disconnect();
+                                  print(res);
+                                }
+                              } else {
+                                // User canceled the picker
+                              }
+                            },
                             child: const Text('Subir archivo'))
                       ],
                     ),
