@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/login_page.dart';
+import 'package:flutter_application_1/pages/register_page.dart';
 import 'package:flutter_application_1/pages/sessionViews/messages_view.dart';
 import 'package:flutter_application_1/pages/sessionViews/user_data_view.dart';
 import 'sessionViews/file_sharing_page.dart';

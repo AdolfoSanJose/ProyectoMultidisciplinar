@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_application_1/controllers/user.dart';
 import 'package:flutter_application_1/pages/main_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/controllers/roles.dart';
 import 'package:flutter/material.dart';
 import '../components/my_textfield.dart';
 import '../components/my_button.dart';
@@ -58,7 +59,6 @@ class _LoginPageState extends State<LoginPage> {
   String getBaseUrl() {
     return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
   }
-
   // Error Dialog
   Future openDialog(String message) => showDialog(
       context: context,
@@ -122,7 +122,6 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 15,
                       ),
                     ),
-
                     const SizedBox(height: 15),
 
                     // Log in container
