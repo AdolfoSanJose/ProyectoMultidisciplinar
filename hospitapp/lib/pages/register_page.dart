@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controllers/roles.dart';
 import 'package:flutter_application_1/controllers/user.dart';
 import 'package:flutter_application_1/pages/login_or_register_page.dart';
 import '../components/my_textfield.dart';
@@ -33,9 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final formKey = GlobalKey<FormState>();
   User user = User(name: "");
-  Uri urlRegister = Uri.parse("http://10.0.2.2:8080/user/register");
-  Uri urlUserDataByRole =
-      Uri.parse("http://10.0.2.2:8080/user/getUserDataByRole");
 
   // @override
   // void initState() {

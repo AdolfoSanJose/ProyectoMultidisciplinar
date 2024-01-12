@@ -24,6 +24,7 @@ class MyTextField extends StatelessWidget {
           if (value!.isEmpty) {
             return errorText;
           }
+          return null;
         },
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(

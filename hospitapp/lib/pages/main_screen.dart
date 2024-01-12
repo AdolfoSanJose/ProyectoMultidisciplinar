@@ -1,18 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/login_or_register_page.dart';
-import 'package:flutter_application_1/pages/sessionViews/messages_view.dart';
 import 'package:flutter_application_1/pages/sessionViews/user_data_view.dart';
 import 'package:flutter_application_1/controllers/user.dart';
 import 'package:http/http.dart' as http;
-
-import 'sessionViews/file_sharing_page.dart';
+import 'package:flutter_application_1/pages/sessionViews/file_sharing_page.dart';
+import 'package:flutter_application_1/pages/sessionViews/messages_view.dart';
 
 // Menú base para la barra de navegación al iniciar sesión en la aplicación
 class MainScreen extends StatefulWidget {
-  const MainScreen(String? email, {super.key});
+  final String email;
+  const MainScreen(this.email, {super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -20,52 +19,68 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int selectedIndex = 0;
-  User loggedUser = User();
+  User loggedUser = User(name: null);
   String userName = "";
   String userEmail = "";
   String userDni = "";
-  Uri urlUserDataByEmail =
-      Uri.parse("http://10.0.2.2:8080/user/getUserDataByEmail");
 
   @override
   void initState() {
     super.initState();
-    getUserData('example@gmail.com');
+    initializeUserData(widget.email);
   }
 
-  Future<void> getUserData(email) async {
+  Future<void> initializeUserData(String email) async {
+    try {
+      await getUserData(email);
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
+  }
+
+  Future<void> getUserData(String email) async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/getUserDataByEmail");
     var res = await http.post(
-      urlUserDataByEmail,
+      url,
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({'email': email}),
+      body: json.encode({'email': email}), // Use the parameter email here
     );
     if (res.statusCode == 200) {
       String body = utf8.decode(res.bodyBytes);
 
       final jsonData = jsonDecode(body);
 
-      userName = jsonData["name"];
-      userDni = jsonData["dni"];
-      userEmail = jsonData["email"];
+      setState(() {
+        userName = jsonData["name"];
+        userDni = jsonData["dni"];
+        userEmail = jsonData["email"];
+      });
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => FileSharingPage(userName)),
+      );
+    } else {
+      print('Failed to fetch user data. Status code: ${res.statusCode}');
     }
+  }
+
+  String getBaseUrl() {
+    return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
   }
 
   @override
   Widget build(BuildContext context) {
     // Al meter en esta lista las vistas, aparecerán en ese mismo orden en el menú de navegación
     final screens = [
-      FileSharingPage(),
-      MessagesView(),
-      UserDataView(
-        userName: userName,
-        userEmail: userEmail,
-        userDni: userDni,
-      ),
+      FileSharingPage(userName),
+      const MessagesView(),
+      UserDataView(userName, userEmail, userDni),
     ];
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Hospitapp",
+          "HospitApp",
           style: TextStyle(fontSize: 35),
         ),
         leading: const Icon(
@@ -103,7 +118,11 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               );
             },
-            icon: const Icon(Icons.logout),
+            icon: const Icon(
+              Icons.logout_outlined,
+              size: 35,
+              color: Colors.black,
+            ),
           )
         ],
       ),
@@ -135,7 +154,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.person_outline),
             activeIcon: const Icon(Icons.person_rounded),
-            label: '{UserName}',
+            label: userName,
             backgroundColor: Colors.blue.shade700,
           ),
           // <----AÑADE AQUÍ TANTOS BottomNavigationBarItem como vistas añadidas a la lista 'screens'

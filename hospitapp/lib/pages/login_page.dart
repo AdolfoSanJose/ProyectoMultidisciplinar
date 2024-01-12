@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_application_1/controllers/roles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_application_1/pages/main_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,27 +24,31 @@ class _LoginPageState extends State<LoginPage> {
   // Form key
   final formKey = GlobalKey<FormState>();
   User user = User(name: "");
-  Uri url = Uri.parse("http://10.0.2.2:8080/user/login");
 
   // Sign in method
   Future signIn() async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/login");
     try {
       user.email = mailController.text;
       user.password = passwdController.text;
       var res = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode({'email': user.email, 'password': user.password}));
-      print(res.body);
-      print(user.email);
       if (res.statusCode == 200) {
-        return Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => MainScreen(user.email)));
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => MainScreen(user.email ?? '')),
+        );
       } else {
         openDialog("Credenciales incorrectas");
       }
     } catch (error) {
       print("Error in signIn: $error");
     }
+  }
+
+  String getBaseUrl() {
+    return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
   }
 
   // Error Dialog

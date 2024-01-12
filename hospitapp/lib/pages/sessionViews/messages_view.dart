@@ -42,7 +42,7 @@ class _MessagesViewState extends State<MessagesView> {
       print('Email sent successfully');
       showSnackBar('Correo enviado con Exito!');
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => MainScreen(), // <--------
+        builder: (context) => const MainScreen(''), // <--------
       ));
     } else {
       print('Failed to send email');
