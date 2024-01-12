@@ -12,13 +12,6 @@ class FileSharingPage extends StatefulWidget {
 }
 
 class _FileSharingPageState extends State<FileSharingPage> {
-  // Text controllers
-  final mailController = TextEditingController();
-  final passwdController = TextEditingController();
-
-  // Sign in method
-  void signIn() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +39,22 @@ class _FileSharingPageState extends State<FileSharingPage> {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 textStyle: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                                backgroundColor: Colors.lightBlue),
+                            onPressed: () => {},
+                            child: const Text('Subir archivo')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                                backgroundColor: Colors.lightBlue),
+                            onPressed: () => {},
+                            child: const Text('Crear directorio'))
                               fontSize: 20,
                             )),
                             onPressed: () async {

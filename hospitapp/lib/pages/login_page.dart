@@ -23,13 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // Form key
   final formKey = GlobalKey<FormState>();
-  User user = User(
-      idUser: 0,
-      name: '',
-      email: '',
-      password: '',
-      dni: '',
-      idRol: Roles(idRol: 0));
+  User user = User(name: "");
   Uri url = Uri.parse("http://10.0.2.2:8080/user/login");
 
   // Sign in method
