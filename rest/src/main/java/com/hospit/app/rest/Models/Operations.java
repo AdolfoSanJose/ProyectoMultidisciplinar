@@ -1,8 +1,12 @@
 package com.hospit.app.rest.Models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "operaciones")
 public class Operations {
     @Id
@@ -15,19 +19,4 @@ public class Operations {
 
     }
 
-    public int getIdOperation() {
-        return idOperation;
-    }
-
-    public void setIdOperation(int idOperation) {
-        this.idOperation = idOperation;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 }

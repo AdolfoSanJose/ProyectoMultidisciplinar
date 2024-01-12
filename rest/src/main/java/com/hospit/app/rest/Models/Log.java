@@ -1,10 +1,14 @@
 package com.hospit.app.rest.Models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "log")
 public class Log {
     @Id
@@ -24,45 +28,5 @@ public class Log {
 
     public Log() {
 
-    }
-
-    public int getIdLog() {
-        return idLog;
-    }
-
-    public void setIdLog(int idLog) {
-        this.idLog = idLog;
-    }
-
-    public Date getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
-    public User getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
-    }
-
-    public Operations getIdOperation() {
-        return idOperation;
-    }
-
-    public void setIdOperation(Operations idOperation) {
-        this.idOperation = idOperation;
-    }
-
-    public Files getIdFile() {
-        return idFile;
-    }
-
-    public void setIdFile(Files idFile) {
-        this.idFile = idFile;
     }
 }

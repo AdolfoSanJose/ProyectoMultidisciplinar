@@ -1,8 +1,12 @@
 package com.hospit.app.rest.Models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "archivos")
 public class Files {
     @Id
@@ -17,27 +21,4 @@ public class Files {
 
     }
 
-    public int getIdFile() {
-        return idFile;
-    }
-
-    public void setIdFile(int idFile) {
-        this.idFile = idFile;
-    }
-
-    public String getNombreArchivo() {
-        return nombreArchivo;
-    }
-
-    public void setNombreArchivo(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
-    }
-
-    public char getExtensionArchivo() {
-        return extensionArchivo;
-    }
-
-    public void setExtensionArchivo(char extensionArchivo) {
-        this.extensionArchivo = extensionArchivo;
-    }
 }
