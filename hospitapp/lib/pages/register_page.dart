@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/controllers/roles.dart';
+import 'package:flutter_application_1/controllers/user.dart';
+import 'package:flutter_application_1/pages/login_or_register_page.dart';
 import '../components/my_textfield.dart';
 import '../components/my_button.dart';
+import 'package:http/http.dart' as http;
 
-const List<String> list = <String>['Medico', 'Paciente'];
+// const List<String> list = <String>['Selecciona a tu médico', 'Artem'];
 
 class RegisterPage extends StatefulWidget {
   void Function()? onTap;
@@ -15,14 +22,116 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   // Text controllers
   final nameController = TextEditingController();
+  final dniController = TextEditingController();
   final mailController = TextEditingController();
   final passwdController = TextEditingController();
   final confirmPasswdController = TextEditingController();
 
-  String dropdownValue = list.first;
+  // User List
+  List<User> userList = [];
+  String selectedUserId = '';
+
+  final formKey = GlobalKey<FormState>();
+  User user = User(
+      idUser: null,
+      name: null,
+      email: null,
+      password: null,
+      dni: null,
+      idRol: Roles(idRol: null),
+      medico: User(
+          idUser: null,
+          name: null,
+          email: null,
+          password: null,
+          dni: null,
+          idRol: Roles(idRol: null)));
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDataByRole(Roles(idRol: 1));
+  }
+
+  Future<void> getUserDataByRole(Roles idRol) async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/getUserDataByRole");
+    try {
+      var res = await http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(
+            {'idRol': idRol.idRol},
+          ));
+      if (res.statusCode == 200) {
+        print(res.body);
+        final List<dynamic> data = json.decode(res.body);
+        if (data != null && data is List) {
+          List<User> users = data.map((json) => User.fromJson(json)).toList();
+          setState(() {
+            userList = users;
+          });
+        }
+      } else {
+        print('Error al obtener usuarios. Código de estado: ${res.statusCode}');
+        print('Cuerpo de la respuesta: ${res.body}');
+      }
+    } catch (error) {
+      print('Error en getUsers: $error');
+    }
+  }
+
+  String getBaseUrl() {
+    return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
+  }
+
+  // String dropdownValue = list.first;
 
   // Sign up method
-  void signUp() {}
+  Future signUp() async {
+    String baseUrl = getBaseUrl();
+    Uri url = Uri.parse("$baseUrl/user/register");
+    try {
+      user.name = nameController.text;
+      user.dni = dniController.text;
+      user.email = mailController.text;
+      user.password = passwdController.text;
+      if (user.password != confirmPasswdController.text) {
+        openDialog("Las contraseñas no coinciden.", Colors.red);
+      } else {
+        var res = await http.post(url,
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode({
+              'name': user.name,
+              'email': user.email,
+              'password': user.password,
+              'dni': user.dni,
+              'id_rol': 2
+            }));
+        print(res.body);
+        if (res.statusCode == 200) {
+          openDialog("¡Cuenta creada con éxito!", Colors.greenAccent);
+          return Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const LoginOrRegisterPage()));
+        } else {
+          print("Credenciales incorrectas.");
+        }
+      }
+    } catch (error) {
+      print("Error in signIn: $error");
+    }
+  }
+
+  // Error Dialog
+  Future openDialog(String text, Color color) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(text),
+            titleTextStyle: TextStyle(
+              color: color,
+              fontSize: 20,
+            ),
+            actions: const [CloseButton()],
+          ));
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   //  icon
                   Icon(
                     Icons.app_registration_rounded,
-                    size: 60,
+                    size: 35,
                     color: Colors.blue.shade700,
                   ),
 
@@ -78,19 +187,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Log in container
                   Container(
-                    height: 625,
+                    height: 700,
                     width: 350,
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(37, 0, 134, 243),
                         borderRadius: BorderRadius.circular(20)),
                     child: Column(children: [
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 30),
 
                       // Nombre
                       MyTextField(
                         controller: nameController,
                         hintText: 'Nombre',
                         obscureText: false,
+                        errorText: 'Campo nombre no puede estar vacío',
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      MyTextField(
+                        controller: dniController,
+                        hintText: 'DNI',
+                        obscureText: false,
+                        errorText: 'Campo DNI no puede estar vacío',
                       ),
 
                       const SizedBox(height: 15),
@@ -99,7 +218,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       Row(
                         children: [
                           DropdownButton<String>(
-                            value: dropdownValue,
+                            hint: const Text("Selecciona a tu médico"),
+                            value: selectedUserId,
                             icon: const Icon(Icons.arrow_downward_outlined),
                             iconSize: 25,
                             elevation: 16,
@@ -110,17 +230,17 @@ class _RegisterPageState extends State<RegisterPage> {
                               height: 2,
                               color: Colors.blue,
                             ),
-                            onChanged: (String? value) {
+                            onChanged: (String? newValue) {
                               // This is called when the user selects an item.
                               setState(() {
-                                dropdownValue = value!;
+                                selectedUserId = newValue!;
                               });
                             },
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: userList
+                                .map<DropdownMenuItem<String>>((User user) {
                               return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
+                                value: user.medico?.idUser.toString(),
+                                child: Text(user.toString()),
                               );
                             }).toList(),
                           ),
@@ -134,6 +254,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: mailController,
                         hintText: 'Correo',
                         obscureText: false,
+                        errorText: 'Campo correo no puede estar vacío',
                       ),
 
                       const SizedBox(height: 15),
@@ -143,6 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: passwdController,
                         hintText: 'Contraseña',
                         obscureText: true,
+                        errorText: 'Campo contraseña no puede estar vacío',
                       ),
 
                       const SizedBox(height: 15),
@@ -152,6 +274,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: confirmPasswdController,
                         hintText: 'Confirmar Contraseña',
                         obscureText: true,
+                        errorText:
+                            'Campo repetir contraseña no puede estar vacío',
                       ),
 
                       const SizedBox(height: 25),
