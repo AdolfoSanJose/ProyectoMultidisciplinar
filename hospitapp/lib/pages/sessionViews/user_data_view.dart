@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controllers/user.dart';
 
 class UserDataView extends StatefulWidget {
-  void Function()? onTap;
   String userName, userEmail, userDni;
+  void Function()? onTap;
+
   UserDataView(
-      {super.key,
-      required this.userName,
-      required this.userEmail,
-      required this.userDni});
+    this.userName,
+    this.userEmail,
+    this.userDni, {
+    super.key,
+  });
 
   @override
   State<UserDataView> createState() => _UserDataViewState();
@@ -37,38 +38,38 @@ class _UserDataViewState extends State<UserDataView> {
                   color: const Color.fromARGB(37, 0, 134, 243),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.person_pin,
                       size: 70,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Text(
-                      '{UserName}',
-                      style: TextStyle(
-                        fontSize: 40,
+                      widget.userName,
+                      style: const TextStyle(
+                        fontSize: 26,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Text(
-                      '{Correo}',
-                      style: TextStyle(
-                        fontSize: 40,
+                      widget.userEmail,
+                      style: const TextStyle(
+                        fontSize: 20,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Text(
-                      '{NIF/NIE}',
-                      style: TextStyle(
-                        fontSize: 40,
+                      widget.userDni,
+                      style: const TextStyle(
+                        fontSize: 26,
                       ),
                     ),
                   ],

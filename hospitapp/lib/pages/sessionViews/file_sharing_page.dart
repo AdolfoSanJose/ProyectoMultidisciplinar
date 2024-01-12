@@ -4,14 +4,22 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 
 class FileSharingPage extends StatefulWidget {
+  final String userName;
+
   void Function()? onTap;
-  FileSharingPage({super.key});
+  FileSharingPage(this.userName, {super.key});
 
   @override
   State<FileSharingPage> createState() => _FileSharingPageState();
 }
 
 class _FileSharingPageState extends State<FileSharingPage> {
+  // FTP Service attributes
+  final String ftpHost = '192.168.56.1';
+  final String ftpUser = 'Gisela';
+  final String ftpPassword = 'medicoGisela';
+  final int ftpPort = 21;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,84 +35,123 @@ class _FileSharingPageState extends State<FileSharingPage> {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment:
+                  MainAxisAlignment.start, // Align text to the top
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 20), // Adjusted height
 
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                                backgroundColor: Colors.lightBlue),
-                            onPressed: () => {},
-                            child: const Text('Subir archivo')),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                                backgroundColor: Colors.lightBlue),
-                            onPressed: () => {},
-                            child: const Text('Crear directorio'))
-                              fontSize: 20,
-                            )),
-                            onPressed: () async {
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
-                              if (result != null) {
-                                if (result.files.single.bytes != null) {
-                                  List<int> fileBytes =
-                                      result.files.single.bytes!;
-                                  File file =
-                                      await File(result.files.single.name)
-                                          .writeAsBytes(fileBytes);
-                                  FTPConnect ftpConnect = FTPConnect(
-                                      '192.168.56.1',
-                                      user: 'Gisela',
-                                      pass: 'medicoGisela',
-                                      port: 21);
-
-                                  await ftpConnect.connect();
-                                  bool res =
-                                      await ftpConnect.uploadFileWithRetry(file,
-                                          pRetryCount: 2);
-                                  await ftpConnect.disconnect();
-                                  print(res);
-                                }
-                              } else {
-                                // User canceled the picker
-                              }
-                            },
-                            child: const Text('Subir archivo'))
-                      ],
-                    ),
-                  ],
+                // Bienvenido! text
+                Text(
+                  '¡Bienvenido, ${widget.userName}!',
+                  style: const TextStyle(
+                    fontSize: 26,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
 
                 // Files zone
                 Container(
-                  height: 500,
-                  width: 350,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(37, 0, 134, 243),
-                    borderRadius: BorderRadius.circular(20),
+                  height: 220,
+                  width: double.infinity,
+                  color: const Color.fromARGB(37, 0, 134, 243),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildClickableSquare(
+                        "Subir archivo",
+                        Icons.upload,
+                        ftpHost,
+                        ftpUser,
+                        ftpPassword,
+                        ftpPort,
+                      ),
+                      _buildSquare("Bajar archivo", Icons.download),
+                    ],
                   ),
-                  child: Column(children: []),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 220,
+                  width: double.infinity,
+                  color: const Color.fromARGB(37, 0, 134, 243),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildSquare("Modificar archivo", Icons.edit),
+                      _buildSquare("Eliminar archivo", Icons.delete),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSquare(String text, IconData icon) {
+    return Container(
+      width: 150,
+      height: 150,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.lightBlue, width: 2),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 50,
+            color: Colors.lightBlue,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            text,
+            style: TextStyle(color: Colors.lightBlue),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClickableSquare(
+    String text,
+    IconData icon,
+    String host,
+    String user,
+    String password,
+    int port,
+  ) {
+    return GestureDetector(
+      onTap: () async {
+        FilePickerResult? result = await FilePicker.platform.pickFiles();
+        if (result != null) {
+          if (result.files.single.bytes != null) {
+            List<int> fileBytes = result.files.single.bytes!;
+            File file =
+                await File(result.files.single.name).writeAsBytes(fileBytes);
+            FTPConnect ftpConnect = FTPConnect(
+              host,
+              user: user,
+              pass: password,
+              port: port,
+            );
+
+            await ftpConnect.connect();
+            bool res =
+                await ftpConnect.uploadFileWithRetry(file, pRetryCount: 2);
+            await ftpConnect.disconnect();
+            print(res);
+          }
+        } else {
+          // User canceled the picker
+        }
+      },
+      child: _buildSquare(text, icon),
     );
   }
 }
