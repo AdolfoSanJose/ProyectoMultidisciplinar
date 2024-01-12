@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +42,7 @@ class _MessagesViewState extends State<MessagesView> {
       print('Email sent successfully');
       showSnackBar('Correo enviado con Exito!');
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => MainScreen(),
+        builder: (context) => MainScreen(), // <--------
       ));
     } else {
       print('Failed to send email');
@@ -54,7 +53,7 @@ class _MessagesViewState extends State<MessagesView> {
   String getBaseUrl() {
     return kIsWeb ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

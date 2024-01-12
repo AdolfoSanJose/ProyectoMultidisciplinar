@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/controllers/user.dart';
 
 class UserDataView extends StatefulWidget {
   void Function()? onTap;
-  UserDataView({super.key});
+  String userName, userEmail, userDni;
+  UserDataView(
+      {super.key,
+      required this.userName,
+      required this.userEmail,
+      required this.userDni});
 
   @override
   State<UserDataView> createState() => _UserDataViewState();
