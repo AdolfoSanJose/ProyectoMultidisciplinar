@@ -118,7 +118,11 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               );
             },
-            icon: const Icon(Icons.logout),
+            icon: const Icon(
+              Icons.logout_outlined,
+              size: 35,
+              color: Colors.black,
+            ),
           )
         ],
       ),
