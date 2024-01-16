@@ -44,11 +44,10 @@ class _MainScreenState extends State<MainScreen> {
     var res = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({'email': email}), // Use the parameter email here
+      body: json.encode({'email': email}),
     );
     if (res.statusCode == 200) {
       String body = utf8.decode(res.bodyBytes);
-
       final jsonData = jsonDecode(body);
 
       setState(() {
@@ -56,10 +55,6 @@ class _MainScreenState extends State<MainScreen> {
         userDni = jsonData["dni"];
         userEmail = jsonData["email"];
       });
-
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => FileSharingPage(userName)),
-      );
     } else {
       print('Failed to fetch user data. Status code: ${res.statusCode}');
     }
@@ -74,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
     // Al meter en esta lista las vistas, aparecerán en ese mismo orden en el menú de navegación
     final screens = [
       FileSharingPage(userName),
-      const MessagesView(),
+      MessagesView(navigateToMainScreen: navigateBackToMainScreen),
       UserDataView(userName, userEmail, userDni),
     ];
     return Scaffold(
@@ -167,5 +162,12 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
     );
+  }
+
+  void navigateBackToMainScreen() {
+    setState(() {
+      selectedIndex =
+          0; // Change to the index of the main screen in your screens list
+    });
   }
 }

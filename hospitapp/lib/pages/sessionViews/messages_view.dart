@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/main_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/pages/main_screen.dart';
 
 class MessagesView extends StatefulWidget {
-  const MessagesView({Key? key}) : super(key: key);
+  final VoidCallback navigateToMainScreen;
+
+  const MessagesView({required this.navigateToMainScreen, Key? key})
+      : super(key: key);
 
   @override
   State<MessagesView> createState() => _MessagesViewState();
@@ -41,9 +44,10 @@ class _MessagesViewState extends State<MessagesView> {
     if (response.statusCode == 200) {
       print('Email sent successfully');
       showSnackBar('Correo enviado con Exito!');
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const MainScreen(''), // <--------
-      ));
+      destinatarioController.text = '';
+      asuntoController.text = '';
+      contenidoController.text = '';
+      widget.navigateToMainScreen(); // Call the callback to navigate back
     } else {
       print('Failed to send email');
       showSnackBar('Failed to send email');
