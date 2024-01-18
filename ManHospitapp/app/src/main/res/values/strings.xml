@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ManualHospitapp</string>
+    <string name="manHosp">Manual de Hospitapp</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="signIn">Registrarse</string>
+    <string name="files">Gestión de archivos</string>
+    <string name="messagesSending">Envío de mensajes</string>
+    <string name="userData">Ver datos de perfil</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="desc_files">Verás 4 opciones disponibles. Como médico, las verás todas ellas. Los pacientes tan solo verán subir y bajar archivos. Para subir un archivo pulsa sobre el botón con ese mismo nombre y elige el archivo deseado desde tu sistema de ficheros. Para las otras tres opciones, elige el archivo sobre el que deseas realizar su acción de los subidos al servidor</string>
+    <string name="desc_login">Para iniciar sesión debes tener primero una cuenta registrada. Si no la tienes, pulsa sobre el botón inferior de la app \'Regístrate ahora\'. Si ya tienes una cuenta, escribe tu correo electrónico, contraseña y pulsa sobre el botón \'Iniciar Sesión\'</string>
+    <string name="desc_logout">Para cerrar sesión, pulsa sobre el botón de salir situado en la esquina superior derecha. Al hacerlo, aparecerá una ventana emergente. Pulse sobre el botón \'Sí\' si deseas finalmente cerrar la sesión</string>
+    <string name="desc_user_data">En esta ventana podrá ver sus credenciales, visualizando su nombre, correo electrónico y NIF/NIE</string>
+</resources>
