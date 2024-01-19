@@ -1,0 +1,33 @@
+# README
+# Multidisciplinary Project // Proyecto Multidisciplinar
+
+# Componentes: 
+#  *2ºDAM Málaga:
+#    -Gisela Jiménez
+#    -Juan Carlos Ostos
+#    -Artem Korzan
+#    -Adolfo Pérez-Gascón
+#  *1ºDAW Badajoz:
+#    -Abel Ozores
+#    -Alberto
+#    -Fernando
+#    -Eduardo Davila
+
+
+# Software development for a hospital. Allows cooperation between users and sharing information through an FTP server that saves the info.
+# The client will be able to upload, download, modify and delete files. Patients can upload medical tests and medics the diagnosis.
+# The software will have a data base that registers every movement from the FTP server, storing the user, user type, operation and date and time of the transaction.
+# Medics will be able to perform any operation in the FTP server, ONLY in their folders, meanwhile patients can only upload their medical tests from  their doctor.
+# On the other hand, the software will count with a mail system to upgrade comunication between members from the hospital (medics and patients).
+# At last, it will have a manual built in web and also in a mobile app. The manual will contain a brief demo of the delevoped app and will only be accesible by hospital users.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Desarrollo de un software para un hospital que permite la cooperación entre los usuarios y la compartición de información entre todos ellos. Mediante un servidor FTP, 
+# se guarda la información de una manera ordenada, además, el cliente será capaz de subir, bajar, modificar y borrar archivos. Los pacientes subirán las pruebas médicas y los medicos los diagnósticos.
+# Tendrá una base de datos que registre todos los movimientos realizados en el servidor FTP, almacenando el usuario, su tipo, la operación realizada, ya la fecha y hora de la transacción.
+# Los médicos podrán realizar cualquier operación en el servidor FTP ÚNICAMENTE en sus carpetas, mientras que los pacientes sólo podrán subir sus pruebas médicas las carpetas de su doctor.
+# A parte, contará con un sistema de correo electronico para mejorar la comunicación entre los miembros del hospital (médicos y pacientes).
+# Por último, contará con un manual de la aplicación, tanto en app como en web. Este manual deberá contener una demo de la aplicación desarrollada y sólo será accesible por los usuarios del hospital. 
+
+# Tecnologías utilizadas: Flutter, Dart, Java, Xampp, Trello, Git
